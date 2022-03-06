@@ -10,4 +10,11 @@ class BlogPost(models.Model):
     in_archive = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.title} из категории\'{self.blog_category.name}\''
+        return f'{self.title} из категории\'{BlogCategory.name}\''
+
+
+class BlogCategory(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Название категории')
+    slug = models.SlugField(unique=True)
+    image = models.ImageField(upload_to='blog_posts/', blank=True, null=True)
+
