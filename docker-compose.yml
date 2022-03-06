@@ -1,0 +1,49 @@
+version: '3.7'
+
+services:
+
+  bdb:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_PASSWORD: BUYB2QAZ
+      POSTGRES_USER: postgres
+      POSTGRES_DB: Leather_product
+    restart: always
+
+  frontend:
+    container_name: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/usr/src/frontend
+      # One-way volume to use node_modules from inside image
+      - /usr/src/frontend/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - bweb
+    command: npm start
+
+  bweb:
+    container_name: bweb
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    command: bash -c "python /usr/src/backend/manage.py makemigrations --noinput &&
+             python /usr/src/backend/manage.py migrate --noinput &&
+             python manage.py collectstatic --noinput &&
+             python /usr/src/backend/manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/usr/src/backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - bdb
+
+volumes:
+  postgres_data:
