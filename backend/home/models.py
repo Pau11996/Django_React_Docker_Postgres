@@ -1,6 +1,12 @@
 from django.db import models
 
 
+class BlogCategory(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Название категории')
+    slug = models.SlugField(unique=True)
+    image = models.ImageField(upload_to='blog_posts/', blank=True, null=True)
+
+
 class BlogPost(models.Model):
     title = models.CharField(max_length=255, verbose_name='Название поста')
     slug = models.SlugField(unique=True)
@@ -13,8 +19,5 @@ class BlogPost(models.Model):
         return f'{self.title} из категории\'{BlogCategory.name}\''
 
 
-class BlogCategory(models.Model):
-    name = models.CharField(max_length=255, verbose_name='Название категории')
-    slug = models.SlugField(unique=True)
-    image = models.ImageField(upload_to='blog_posts/', blank=True, null=True)
+
 
