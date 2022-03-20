@@ -7,7 +7,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 
-from backend.utils.uploading import upload_function
+from utils.uploading import upload_function
 
 
 class Products(models.Model):
@@ -24,6 +24,8 @@ class Products(models.Model):
     released_data = models.DateField(verbose_name="Дата релиза")
     workshop = models.ForeignKey('Workshop', on_delete=models.CASCADE, verbose_name="Мастерская" )
 
+    def __str__(self):
+        return self.name
 
 
 class Category(models.Model):
@@ -31,6 +33,9 @@ class Category(models.Model):
 
     name = models.CharField(max_length=255, verbose_name='Название категории товара')
     slug = models.SlugField()
+
+    def __str__(self):
+        return self.name
 
 
 class CartProduct(models.Model):
@@ -162,6 +167,9 @@ class Workshop(models.Model):
 
     name = models.CharField(max_length=255, verbose_name='Название мастерской')
     slug = models.SlugField()
+
+    def __str__(self):
+        return self.name
 
 
 
