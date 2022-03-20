@@ -88,7 +88,7 @@ DATABASES = {
         'NAME': 'Leather_product',
         'USER': 'postgres',
         'PASSWORD': 'BUYB2QAZ',
-        'HOST': 'bdb',
+        'HOST': 'localhost',
         'PORT': 5432
     }
 }
