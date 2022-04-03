@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework import viewsets, serializers
+from rest_framework import viewsets, serializers, permissions
 from rest_framework.views import APIView
 
 from .serializers import (
@@ -16,6 +16,8 @@ from ..models import Products, Category
 #     serializer_class = CategoryDetailSerializer
 
 class CategoryListView(APIView):
+
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request):
         category = Category.objects.all()
@@ -43,6 +45,8 @@ class ProductsViewSet(viewsets.ModelViewSet):
 
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 # View for reviews in future
 
